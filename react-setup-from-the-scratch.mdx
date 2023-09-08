@@ -1,0 +1,177 @@
+---
+title: "React app setup from the scratch"
+description: "Create React app from the scratch without using CRA"
+author: "Jan Gana"
+date: "2023-09-08"
+tags: ["react", "webpack", "babel", "typescript"]
+---
+
+[React](https://react.dev) has gained immense popularity in the web development community due to its simplicity and powerful capabilities for building user interfaces. While tools like [create-react-app](https://create-react-app.dev) make starting a React project quick and easy, it's essential to understand how to create a React app from scratch.
+
+This knowledge empowers you to have more control over your project's configuration and gain a deeper understanding of the underlying technologies. In this blog post, I'll walk you through the process of creating a React app without using `create-react-app`.
+
+<h2>Prerequisites:</h2>
+Before we dive into creating a React app, make sure you have the following tools
+and knowledge:
+
+1. [Node.js](https://www.nodejs.org) and npm (Node Package Manager) installed on your computer.
+2. A code editor like [VS Code](https://code.visualstudio.com/) or your preferred choice.
+3. Basic understanding of JavaScript and React concepts.
+
+<h2>Step 1: Setting Up Your Project Directory</h2>
+
+Start by creating a new directory for your project. Open your terminal and navigate to your preferred location:
+
+```bash
+mkdir react-from-the-scratch
+cd react-from-the-scratch
+```
+
+<h2>Step 2: Initializing a Node.js Project</h2>
+
+Now, initialize a new Node.js project in your project directory using npm:
+
+```bash
+npm init -y
+```
+
+This command will create a "package.json" file that stores project metadata and dependencies.
+
+<h2>Step 3: Installing React and ReactDOM and TypeScript</h2>
+
+To use React, you need to install the following packages: `react`, `react-dom` and `typescript`.
+Run the following command to install them:
+
+```bash
+npm install react react-dom typescript @types/react @types/react-dom
+```
+
+<h2>Step 4: Writing Your First React Component</h2>
+
+Now, it's time to create your first React component. Create a directory named `src` in your project's root directory and inside it, create an `index.tsx` file. This will be your app's entry point. Here's a simple example:
+
+```tsx
+import React, { FC, StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+
+const App = () => <div>My beautiful React App</div>;
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+```
+
+<h2>Step 5: Creating an HTML File</h2>
+
+Create a directory named `public` in your project's root directory and inside of this directory
+create an `index.html`. This file will serve as the entry point for your React app:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./src/index.js"></script>
+  </body>
+</html>
+```
+
+<h2>Step 6: Setting Up Babel for JavaScript/JSX Compilation</h2>
+
+React code is typically written using JSX/TSX, which needs to be transpiled into regular JavaScript for browsers to understand. <a target='_blank' href='https://babeljs.io' title='Visit Babel website' >Babel</a> is a popular JavaScript compiler that helps with this. Install the necessary Babel packages:
+
+```bash
+npm i babel-loader @babel/preset-env @babel/preset-react @babel/preset-typescript --save-dev
+```
+
+Create a Babel configuration file named `.babelrc` in your project's root directory and add the following configuration:
+
+```json
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ]
+}
+```
+
+<h2>Step 7: Configuring Webpack</h2>
+
+To bundle your React app, you need to set up Webpack. Install Webpack and related packages:
+
+```bash
+npm install webpack webpack-cli webpack-dev-server html-webpack-plugin ts-loader --save-dev
+```
+
+Create a Webpack configuration file named `webpack.config.js` in your project's root directory:
+
+```js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.tsx",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
+    port: 3001,
+  },
+  mode: "development", // 'development', 'production', 'none'
+};
+```
+
+<h2>Step 8: Start Your Development Server</h2>
+
+You're now ready to start your development server:
+
+```bash
+npx webpack serve
+```
+
+Visit `http://localhost:3001` in your browser, and you should see your React app up and running.
+
+<h2>Step 9: Create a prod build</h2>
+
+```bash
+npx webpack
+```
+
+<h2>Conclusion:</h2>
+
+Creating a React app from scratch gives you a deeper understanding of how the different pieces of the React ecosystem fit together. While tools like `create-react-app` are convenient for quick prototypes, this manual setup allows you to have more control over your project's configuration and helps you learn the underlying technologies better. Happy coding!
+
+Source code for this tutorial can be found in my GitHub [repo](https://github.com/JanGanaCode/youtube/blob/main/react-from-the-scratch/webpack.config.js).
