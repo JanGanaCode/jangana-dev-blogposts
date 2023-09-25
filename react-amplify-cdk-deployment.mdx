@@ -1,0 +1,153 @@
+---
+title: "VIDEO: How to Deploy React App to AWS Amplify via CDK (TypeScript)"
+description: "Deploy React app to AWS Amplify via CDK (TypeScript)"
+author: "Jan Gana"
+date: "2023-09-25"
+tags: ["aws", "react", "amplify", "typescript"]
+---
+
+[AWS CDK](https://aws.amazon.com/cdk) enables you to define your infrastructure with code and provision it through AWS CloudFormation.
+
+<Video id="XLkVZIS1nyg" />
+
+<h2>Prerequisites:</h2>
+Before we dive into creating a React app, make sure you have the following tools
+and knowledge:
+
+1. [Node.js](https://www.nodejs.org) and npm (Node Package Manager) installed on your computer.
+2. [AWS CDK](https://aws.amazon.com/cdk).
+3. Basic understanding of JavaScript and React concepts.
+
+<h2>Step 1: Setting Up Your Project Directory</h2>
+
+Start by creating a new directory for your project:
+
+```bash
+mkdir <your_branch_name>
+cd <your_branch_name>
+```
+
+<h2>Step 2: Create a React App</h2>
+
+```bash
+npx create-react-app <your_app_name> --template typescript
+```
+
+<h2>Step 3: Create CDK code folder</h2>
+
+```bash
+mkdir <your_cdk_infra_code_folder_name>
+cd <your_cdk_infra_code_folder_name>
+```
+
+<h2>Step 4: Initialize a new CDK app</h2>
+
+```bash
+cdk init app --language typescript
+```
+
+<h2>Step 5: Create Amplify stack</h2>
+
+Within the **infra/lib** folder create a new file called **amplify-stack.ts**.
+Here's a starting code:
+
+```js
+import { Stack, StackProps, SecretValue } from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { BuildSpec } from "aws-cdk-lib/aws-codebuild";
+import { App, GitHubSourceCodeProvider } from "@aws-cdk/aws-amplify-alpha";
+
+export class AmplifyStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
+  }
+}
+```
+
+<h2>Step 6: Working on a build spec</h2>
+
+```js
+import { Stack, StackProps, SecretValue } from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { BuildSpec } from "aws-cdk-lib/aws-codebuild";
+import { App, GitHubSourceCodeProvider } from "@aws-cdk/aws-amplify-alpha";
+
+export class AmplifyStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    const amplifyAppName = "My React app";
+
+    const amplifyApp = new App(this, amplifyAppName, {
+      environmentVariables: {
+        AMPLIFY_MONOREPO_APP_ROOT:
+          "<your_branch_name>/<your_cdk_infra_code_folder_name>",
+      },
+      sourceCodeProvider: new GitHubSourceCodeProvider({
+        owner: "<your_github_username>",
+        repository: "<your_repository_name>",
+        oauthToken: SecretValue.secretsManager("your_github_token"),
+      }),
+      buildSpec: BuildSpec.fromObjectToYaml({
+        version: "1.0",
+        applications: [
+          {
+            frontend: {
+              phases: {
+                preBuild: {
+                  commands: ["npm ci"],
+                },
+                build: {
+                  commands: ["npm run build"],
+                },
+              },
+              artifacts: {
+                baseDirectory: "build",
+                files: ["**/*"],
+              },
+              cache: {
+                paths: ["node_modules/**/*"],
+              },
+            },
+            appRoot: "<your_branch_name>/<your_cdk_infra_code_folder_name>",
+          },
+        ],
+      }),
+    });
+    const mainBranch = amplifyApp.addBranch("<your_branch_name>");
+  }
+}
+```
+
+**Imports**: These imports provide the necessary classes and constructs to define AWS resources.
+
+1. **Stack** and **StackProps** are classes used for defining AWS CloudFormation stacks.
+2. **Construct** is a base class for constructing AWS CDK constructs.
+3. **BuildSpec** is used for defining build specifications for CodeBuild.
+4. **App** and **GitHubSourceCodeProvider** are classes from the AWS Amplify library for configuring Amplify applications and specifying the source code provider (in this case, GitHub).
+
+**AmplifyStack** Class: This code defines a class called AmplifyStack that extends the Stack class, representing an AWS CloudFormation stack.
+The AmplifyStack class takes in parameters like scope, id, and optional props, which are used to create an AWS CloudFormation stack.
+
+**Amplify Application Configuration**: Inside the constructor, an Amplify application is configured using the **App** class.
+It defines the name of the Amplify application as **"My React app"** and creates an instance of the **App** class to configure it.
+
+**Environment Variables**: Environment variables for the Amplify application are specified.
+This sets an environment variable named **AMPLIFY_MONOREPO_APP_ROOT** to **"your_branch_name/your_cdk_infra_code_folder_name"** within the Amplify application.
+
+**Source Code Provider**: The code defines the source code provider for the Amplify application, which is GitHub in this case.
+It specifies the GitHub repository's owner, repository name, and an OAuth token (which should be stored securely, potentially in AWS Secrets Manager).
+
+**Build Specification**: The build specifications for the Amplify application are defined.
+The build specification contains instructions for building the application. It specifies the pre-build and build commands, artifacts, and cache settings.
+
+**Branch Configuration**: Finally, a branch named "react-aws-deployment" is added to the Amplify application.
+This code creates a branch within the Amplify application, which can be used to deploy different versions of the application.
+
+<h2>Step 7: Deploy</h2>
+
+```bash
+cdk deploy
+```
+
+<Socials sourceCodeLink="https://github.com/JanGanaCode/youtube/tree/react-aws-deployment/react-aws-deployment" />
