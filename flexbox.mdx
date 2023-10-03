@@ -1,0 +1,97 @@
+---
+title: "VIDEO: CSS Flexbox"
+description: "Learn CSS flexbox in 7 minutes"
+author: "Jan Gana"
+date: "2023-10-03"
+tags: ["css"]
+---
+
+CSS Flexbox, or the Flexible Box Layout, is a layout model in CSS that allows you to design complex layout structures with a more efficient and predictable way than traditional models, especially when you need to distribute space and align items in complex layouts and when the sizes of your items are unknown or dynamic.
+
+<Video id="IS8UKQB5eFM" />
+
+<h2>Get started with Flexbox</h2>
+
+To use Flexbox, you start by defining a container as a flex container with **display: flex;** or **display: inline-flex;** (if you want the container to behave like an inline element). Once set, the direct children of that container automatically become flex items. You can then control the alignment, direction, order, and size of these items using various flex properties on both the parent container and the children.
+
+```css
+/* Parent container */
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Children */
+.flex-item {
+  flex: 1;
+}
+```
+
+<h2>Key Flexbox properties for the parent</h2>
+
+- **display**: Set to either **flex** (block-level) or **inline-flex** (inline-level). <br/>
+- **flex-direction**: Defines the direction items are placed in the container. Values include **row** (default), **row-reverse**, **column**, and **column-reverse**.<br/>
+- **flex-wrap**: By default, items will try to fit on one line. You can change that with **wrap**, **nowrap** (default), or **wrap-reverse**.<br/>
+- **flex-flow**: A shorthand for **flex-direction** and **flex-wrap**.<br/>
+- **justify-content**: Aligns items along the main axis. Values include **flex-start** (default), **flex-end**, **center**, **space-between**, **space-around**, and **space-evenly**.<br/>
+- **align-items**: Aligns items along the cross axis. Values include **flex-start**, **flex-end**, **center**, **baseline**, and **stretch** (default).<br/>
+- **align-content**: Aligns lines when items wrap across multiple lines. Values include **flex-start**, **flex-end**, **center**, **space-between**, **space-around**, and **stretch**.<br/>
+
+<h2>Key Flexbox properties for the children (flex items)</h2>
+
+- **order**: By default, items are displayed in the source order. This property can control the order in which they appear in the flex container.<br/>
+- **flex-grow**: Defines how much of the available space inside the flex container the item should take up.<br/>
+- **flex-shrink**: Defines how the item should shrink when there isn't enough space in the container.<br/>
+- **flex-basis**: Defines the default size of an element before the remaining space is distributed.<br/>
+- **flex**: A shorthand for **flex-grow**, **flex-shrink**, and **flex-basis**.<br/>
+- **align-self**: This property allows the default alignment (or the one set by align-items) to be overridden for individual flex items.<br/>
+
+
+In the context of the Flexbox layout model, understanding the concepts of the **main axis** and **cross axis** is crucial because the behavior of flex items is determined relative to these axes. The direction of these axes depends on the **flex-direction** property of the flex container.
+
+<h2>Main Axis</h2>
+
+The **main axis** is the primary axis along which flex items are laid out. The direction of the main axis is determined by the **flex-direction** property:
+
+- **row**: The main axis runs horizontally (left to right by default).
+- **row-reverse**: The main axis runs horizontally (right to left).
+- **column**: The main axis runs vertically (top to bottom).
+- **column-reverse**: The main axis runs vertically (bottom to top).
+
+<h3>Properties related to the main axis</h3>
+
+- **justify-content**: Defines how flex items are aligned along the main axis.
+- **flex-grow**, **flex-shrink**, and **flex-basis**: These properties determine how space within the container is distributed among flex items along the main axis.
+
+<h2>Cross Axis</h2>
+
+The **cross axis** is perpendicular to the main axis. The direction of the cross axis depends, again, on the **flex-direction**:
+
+For **row** and **row-reverse**, the cross axis runs vertically.
+For **column** and **column-reverse**, the cross axis runs horizontally.
+
+<h3>Properties related to the cross axis</h3>
+
+**align-items: Defines how flex items are aligned along the cross axis for the entire flex container.
+**align-self: Overrides the align-items value for an individual flex item.
+**align-content: Determines the spacing and alignment of flex lines (when items wrap) along the cross axis.
+
+<h3>Visualizing the Axes</h3>
+
+A helpful way to visualize this is to imagine a flex container as a 2D space. If you set **flex-direction** to **row**, then:
+
+The main axis goes from left to right (or right to left for **row-reverse**).
+The cross axis goes from top to bottom.
+
+If you set **flex-direction** to **column**:
+
+The main axis goes from top to bottom (or bottom to top for **column-reverse**).
+The cross axis goes from left to right.
+
+Understanding these axes and their related properties allows for greater control over the placement and alignment of items within a flex container.
+
+
+Flexbox has wide browser support today and can be used in combination with other layout techniques like Grid and Floats to create a variety of layouts. There are also many online resources, tutorials, and playgrounds available that can help you understand and get hands-on experience with Flexbox.
+
+<Socials />
