@@ -1,0 +1,40 @@
+---
+title: "Introduction to React Native for Beginners (2025)"
+description: "Learn how to build native mobile apps for iOS and Android using JavaScript and React Native."
+author: "Jan Gana"
+date: "2025-05-06"
+tags: ["react-native", "mobile-development", "javascript", "beginners"]
+image: "/images/react-native-intro-2025.png"
+---
+
+![React Native Mobile App Development](./images/react-native-intro-2025.png)
+
+React Native is a powerful framework developed by Meta (formerly Facebook) that allows developers to build native mobile applications for both iOS and Android using JavaScript and React. It's an excellent choice for beginners looking to enter the world of mobile app development without having to learn platform-specific languages like Swift or Kotlin.
+
+## Why Choose React Native?
+
+- **Cross-Platform Development**: Write once, deploy on both iOS and Android platforms.
+- **Hot Reloading**: See changes in real-time as you develop your application.
+- **Large Community Support**: Benefit from a vast ecosystem of libraries and tools.
+- **Performance**: Achieve near-native performance with native components.
+
+## Getting Started with React Native
+
+To begin your journey with React Native, follow these steps:
+
+1. **Install Node.js and npm**: Ensure you have the latest versions installed.
+2. **Install Expo CLI**: Expo is a set of tools built around React Native that helps you start projects quickly.
+   ```bash
+   npm install -g expo-cli
+   ```
+3. **Create a New Project**:
+   ```bash
+   npx create-expo-app my-first-app
+   cd my-first-app
+   npm start
+   ```
+4. **Run Your App**: Use an emulator or your physical device to view your app.
+
+For a more detailed guide, refer to the official React Native documentation: [React Native Environment Setup](https://reactnative.dev/docs/environment-setup)
+
+<Socials />
